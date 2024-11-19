@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Создать заявку</title>
+</head>
+<body>
+    <form action="http://localhost:5164/orders" method="post">
+        <input required placeholder="Ввести номер" type="number" name="number" />
+        <input required placeholder="Указать дату" type="date" name="StartDate" />
+        <input required placeholder="Указать бытовой прибор" type="text" name="appliances" />
+        <input required placeholder="Указать тип проблемы" type="text" name="problemType" />
+        <input required placeholder="Ввести описание" type="text" name="description" />
+        <input required placeholder="Указать клиента" type="text" name="client" />
+        <select name="status">
+            <option>в ожидании</option>
+            <option>в работе</option>
+            <option>выполнено</option>
+        </select>
+        <input type="submit" value="Создать" />
+    </form>
+</body>
+</html>

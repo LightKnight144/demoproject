@@ -1,5 +1,15 @@
 var builder = WebApplication.CreateBuilder();
+
+builder.Services.AddCors(options => options.AddPolicy("AllowLocalhost:5164", builder => builder
+                    .WithOrigins("http://localhost:5164")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod())
+);
+
+
 var app = builder.Build();
+
+app.UseCors("AllowLocalhost:5164");
 
 List<Order> orders =
 [
@@ -37,9 +47,6 @@ record class OrderUpdateDTO(string Status, string Description, string Master);
 class Order
 {
     private int number;
-    private int day;
-    private int month;
-    private int year;
     private string appliances;
     private string problemType;
     private string description;
@@ -50,9 +57,8 @@ class Order
     public Order(int number, int day, int month, int year, string appliances, string problemType, string description, string client, string status, string master)
     {
         Number = number;
-        Day = day;
-        Month = month;
-        Year = year;
+        StartDate = new DateTime(year, month, day);
+        EndDate = null;
         Appliances = appliances;
         ProblemType = problemType;
         Description = description;
@@ -62,9 +68,8 @@ class Order
     }
 
     public int Number { get => number; set => number = value; }
-    public int Day { get => day; set => day = value; }
-    public int Month { get => month; set => month = value; }
-    public int Year { get => year; set => year = value; }
+    public DateTime StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
     public string Appliances { get => appliances; set => appliances = value; }
     public string ProblemType { get => problemType; set => problemType = value; }
     public string Description { get => description; set => description = value; }
