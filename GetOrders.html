@@ -1,50 +1,66 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Список заявок</title>
 </head>
 <body>
+    <div>
+        <p>Искать по параметрам</p>
+        <input id="search" placeholder="Поле ввода" />
+        <button onClick="GetFilter()">Найти</button>
+    </div>
     <table>
-        <tr>
-            <th>Номер</th>
-            <th>Дата</th>
-            <th>Бытовые приборы</th>
-            <th>Тип проблемы</th>
-            <th>Описание</th>
-            <th>Клиент</th>
-            <th>Статус</th>
-            <th>Мастер</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Номер</th>
+                <th>Дата</th>
+                <th>Бытовые приборы</th>
+                <th>Тип проблемы</th>
+                <th>Описание</th>
+                <th>Клиент</th>
+                <th>Статус</th>
+                <th>Мастер</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
     </table>
     <script>
-        let table = document.querySelector("table");
+        let tbody = document.querySelector("tbody");
         GetOrders();
 
-        async function GetOrders() {
-            let response = await fetch("http://localhost:5164/", { method: "GET" });
-            let orders = await response.json();
+        async function GetOrders(param = null) {
+            let url = param ?
+                `http://localhost:5164/orders?param=${param}` :
+                "http://localhost:5164/orders";
 
-            orders.forEach(o => {
+            let response = await fetch(url).then(data => data.json())
+
+            if (response.message)
+                alert(response.message);
+
+            response.orders.forEach(o => {
                 let tr = document.createElement("tr");
-                tr.append(CreateTd(o.Number));
-                tr.append(CreateTd(o.StartDate));
-                tr.append(CreateTd(o.Appliances));
-                tr.append(CreateTd(o.ProblemType));
-                tr.append(CreateTd(o.Description));
-                tr.append(CreateTd(o.Client));
-                tr.append(CreateTd(o.Status));
-                tr.append(CreateTd(o.Master));
 
-                table.append(tr);
+                tr.innerHTML = `
+                    <td>${o.number}</td>
+                    <td>${o.startDate}</td>
+                    <td>${o.appliances}</td>
+                    <td>${o.problemType}</td>
+                    <td>${o.description}</td>
+                    <td>${o.client}</td>
+                    <td>${o.status}</td>
+                    <td>${o.master}</td>`;
+
+                tbody.append(tr);
             });
         }
-
-        function CreateTd(data) {
-            let td = document.createElement("td");
-            td.append(data);
-            return td;
+        function GetFilter() {
+            tbody.innerHTML = ""
+            let param = document.getElementById("search").value;
+            GetOrders(param)
         }
     </script>
 </body>
