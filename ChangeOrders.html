@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Обновление заявки</title>
+</head>
+<body>
+    <form action="http://localhost:5164/update" method="post">
+        <input required placeholder="Ввести номер" type="number" name="number" />
+        <input required placeholder="Ввести описание" type="text" name="description" />
+        <input required placeholder="Указать мастера" type="text" name="master" />
+        <label for="status">Статус</label>
+        <select name="status">
+            <option>не выполнено</option>
+            <option>в работе</option>
+            <option>выполнено</option>
+        </select>
+        <input type="submit" value="Обновление заявки" />
+    </form>
+</body>
+</html>

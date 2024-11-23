@@ -13,19 +13,19 @@ app.UseCors("AllowLocalhost:5164");
 
 List<Order> orders =
 [
-    new(1, 3, 11, 2024, "Микроволновка", "не работает", "описание", "Егор", "в ожидании", "Андрей"),
-    new(2, 5, 8, 2024, "Холодильник", "не работает", "описание", "Егор", "в ожидании", "Андрей"),
-    new(3, 7, 3, 2024, "Духовка", "не работает", "описание", "Егор", "в ожидании", "Андрей"),
+    new(1, 3, 11, 2024, "РњРёРєСЂРѕРІРѕР»РЅРѕРІРєР°", "РЅРµ СЂР°Р±РѕС‚Р°РµС‚", "РѕРїРёСЃР°РЅРёРµ", "Р•РіРѕСЂ", "РІ РѕР¶РёРґР°РЅРёРё", "РђРЅРґСЂРµР№"),
+    new(2, 5, 8, 2024, "РҐРѕР»РѕРґРёР»СЊРЅРёРє", "РЅРµ СЂР°Р±РѕС‚Р°РµС‚", "РѕРїРёСЃР°РЅРёРµ", "Р•РіРѕСЂ", "РІ РѕР¶РёРґР°РЅРёРё", "РђРЅРґСЂРµР№"),
+    new(3, 7, 3, 2024, "Р”СѓС…РѕРІРєР°", "РЅРµ СЂР°Р±РѕС‚Р°РµС‚", "РѕРїРёСЃР°РЅРёРµ", "Р•РіРѕСЂ", "РІ РѕР¶РёРґР°РЅРёРё", "РђРЅРґСЂРµР№"),
 ];
 
 
 app.MapGet("/", () => orders);
-app.MapPost("/", (Order o) => orders.Add(o));
-app.MapPut("/{number}", (int number, OrderUpdateDTO dto) =>
+app.MapPost("/orders", (Order o) => orders.Add(o));
+app.MapPost("/update", (int number, OrderUpdateDTO dto) =>
 {
     Order change = orders.Find(o => o.Number == number);
     if (change == null)
-        return Results.NotFound("Не найдено!");
+        return Results.NotFound("РќРµ РЅР°Р№РґРµРЅРѕ!");
     if (change.Status != dto.Status)
     {
         change.Status = dto.Status;
