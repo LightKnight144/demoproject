@@ -5,7 +5,8 @@
     <title>Обновление заявки</title>
 </head>
 <body>
-    <form action="http://localhost:5164/update" method="get">
+    <iframe name="frame" style="display: none"></iframe>
+    <form target="frame" action="http://localhost:5164/update" method="get">
         <input placeholder="Ввести номер" type="number" name="number" />
         <input placeholder="Ввести описание" type="text" name="description" />
         <input placeholder="Указать мастера" type="text" name="master" />

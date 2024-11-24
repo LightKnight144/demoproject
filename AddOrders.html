@@ -5,7 +5,8 @@
     <title>Создать заявку</title>
 </head>
 <body>
-    <form action="http://localhost:5164/create" method="get">
+    <iframe name="frame" style="display: none"></iframe>
+    <form target="frame" action="http://localhost:5164/create" method="get">
         <input required placeholder="Ввести номер" type="number" name="number" />
         <input required placeholder="Указать дату" type="date" name="StartDate" />
         <input required placeholder="Указать бытовой прибор" type="text" name="appliances" />

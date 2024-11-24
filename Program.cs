@@ -38,7 +38,11 @@ app.MapGet("/update", ([AsParameters] OrderUpdateDTO dto) =>
     if (dto.Status != change.Status && dto.Status != "")
     {
         change.Status = dto.Status;
-        message += "Изменён статус заявки под номером" + change.Number + "\n";
+        message += "Изменён статус заявки под номером " + change.Number + "\n";
+        if (dto.Status == "выполнено")
+        {
+            message += "Заявка номер " + change.Number + "завершена" + "\n";
+        }
     }
     if (dto.Description != "")
     {
