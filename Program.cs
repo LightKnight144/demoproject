@@ -35,13 +35,13 @@ app.MapGet("/update", ([AsParameters] OrderUpdateDTO dto) =>
     var change = orders.Find(o => o.Number == dto.Number);
     if (change == null)
         return;
-    if (dto.Status != change.Status && dto.Status != "")
+    if (dto.Status != change.Status)
     {
         change.Status = dto.Status;
         message += "Изменён статус заявки под номером " + change.Number + "\n";
         if (dto.Status == "выполнено")
         {
-            message += "Заявка номер " + change.Number + "завершена" + "\n";
+            message += "Заявка номер " + change.Number + " завершена" + "\n";
         }
     }
     if (dto.Description != "")
@@ -52,11 +52,15 @@ app.MapGet("/update", ([AsParameters] OrderUpdateDTO dto) =>
     {
         change.Master = dto.Master;
     }
+    if (dto.Comments != "")
+    {
+        change.Comments.Add(dto.Comments);
+    }
 });
 
 app.Run();
 
-record class OrderUpdateDTO(int Number, string Status, string Description, string Master);
+record class OrderUpdateDTO(int Number, string Status, string Description, string Master, string Comments);
 class Order(int number, DateOnly startDate, string appliances, string problemType, string description, string client, string status)
 {
 
@@ -69,4 +73,5 @@ class Order(int number, DateOnly startDate, string appliances, string problemTyp
     public string Client { get; set; } = client;
     public string Status { get; set; } = status;
     public string Master { get; set; } = "Не назначено";
+    public List<string> Comments { get; set; } = [];
 }

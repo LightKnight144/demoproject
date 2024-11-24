@@ -21,6 +21,7 @@
                 <th>Клиент</th>
                 <th>Статус</th>
                 <th>Мастер</th>
+                <th>Комментарии</th>
             </tr>
         </thead>
         <tbody>
@@ -52,7 +53,8 @@
                     <td>${o.description}</td>
                     <td>${o.client}</td>
                     <td>${o.status}</td>
-                    <td>${o.master}</td>`;
+                    <td>${o.master}</td>
+                    <td>${o.comments}</td>`;
 
                 tbody.append(tr);
             });
