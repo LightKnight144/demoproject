@@ -14,9 +14,9 @@ app.UseCors("AllowLocalhost:5164");
 
 List<Order> orders =
 [
-    new(1, new(2024, 11, 3), "Микроволновка", "не работает", "описание", "Егор", "в ожидании"),
-    new(2, new(2024, 8, 5), "Холодильник", "не работает", "описание", "Егор", "в ожидании"),
-    new(3, new(2024, 3, 7), "Духовка", "не работает", "описание", "Егор", "в ожидании"),
+    new(1, new(2023, 11, 3), "Микроволновка", "не работает", "описание", "Егор", "в ожидании"),
+    new(2, new(2023, 8, 5), "Холодильник", "не работает", "описание", "Егор", "в ожидании"),
+    new(3, new(2023, 3, 7), "Духовка", "не работает", "описание", "Егор", "в ожидании"),
 ];
 
 string message = "";
@@ -57,6 +57,28 @@ app.MapGet("/update", ([AsParameters] OrderUpdateDTO dto) =>
         change.Comments.Add(dto.Comments);
     }
 });
+
+int complete_count() => orders.FindAll(o => o.Status == "выполнено").Count;
+
+Dictionary<string, int> problemType_stat() =>
+    orders.GroupBy(o => o.ProblemType)
+    .Select(o => (o.Key, o.Count()))
+    .ToDictionary(k => k.Key, i => i.Item2);
+
+double averageTime() =>
+    complete_count() == 0 ? 0 :
+    orders.FindAll(o => o.Status == "выполнено")
+    .Select(o => o.EndDate.Value.DayNumber - o.StartDate.DayNumber)
+    .Sum() / complete_count();
+
+app.MapGet("/statistic", () =>
+new
+{
+    complete_count = complete_count(),
+    problemType_stat = problemType_stat(),
+    averageTime = averageTime()
+});
+
 
 app.Run();
 
