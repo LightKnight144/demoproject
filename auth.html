@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Авторизация</title>
+</head>
+<body>
+    <input required placeholder="Логин" type="text" name="login" id="login" />
+    <input required placeholder="Пароль" type="password" name="password" id="password" />
+    <button onclick="Auth()">Войти</button>
+<script>
+    const LoginUser = "123";
+    const LoginPassword = "123";
+
+    function Auth()
+    {
+        let login = document.getElementById("login").value;
+        let password = document.getElementById("password").value;
+
+        if (login != LoginUser || password != LoginPassword)
+        {
+            alert("Неправильный логин или пароль");
+            return;
+        }
+
+        sessionStorage.setItem("token", "key");
+        window.location.href = "GetOrders.html";
+    }
+</script>
+</body>
+</html>

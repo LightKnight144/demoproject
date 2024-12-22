@@ -5,6 +5,10 @@
     <title>Обновление заявки</title>
 </head>
 <body>
+    <a href="GetOrders.html">Посмотреть заявки</a>
+    <a href="AddOrders.html">Добавить заявку</a>
+    <a href="ChangeOrders.html">Изменить заявку</a>
+    <a href="Statistic.html">Статистика</a>
     <iframe name="frame" style="display: none"></iframe>
     <form target="frame" action="http://localhost:5164/update" method="get">
         <input placeholder="Ввести номер" type="number" name="number" />
@@ -19,5 +23,9 @@
         </select>
         <input type="submit" value="Обновление заявки" />
     </form>
+    <script>
+        if (!sessionStorage.getItem("token"))
+            window.location.href = "auth.html";
+    </script>
 </body>
 </html>
